@@ -1,0 +1,35 @@
+{
+  "name": "grm",
+  "displayName": "Grm Language Support",
+  "description": "",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.82.0"
+  },
+  "publisher": "SkyLord-103",
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "grm",
+        "aliases": [
+          "Grm",
+          "grm"
+        ],
+        "extensions": [
+          ".grm"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "grm",
+        "scopeName": "source.grm",
+        "path": "./syntaxes/grm.tmLanguage.json"
+      }
+    ]
+  }
+}

@@ -1,0 +1,169 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Grm",
+	"patterns": [
+		{
+			"patterns": [
+				{
+					"name": "comment.line.grm",
+					"match": "//.*$"
+				},
+				{
+					"name": "comment.block.grm",
+					"begin": "/\\*",
+					"end": "\\*/"
+				}
+			]
+		},
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [
+				{
+					"name": "variable.control.grm",
+					"match": "\\w+(?=\\s*::=)"
+				},
+				{
+					"name": "keyword.operator.or.grm",
+					"match": "\\|"
+				},
+				{
+					"name": "keyword.operator.optional.grm",
+					"match": "\\?"
+				},
+				{
+					"name": "keyword.operator.zero-or-many.grm",
+					"match": "\\*"
+				},
+				{
+					"name": "keyword.operator.ones-or-many.grm",
+					"match": "\\+"
+				},
+				{
+					"name": "keyword.operator.assignment.grm",
+					"match": "::="
+				},
+				{
+					"name": "punctuation.terminator.statement.grm",
+					"match": ";"
+				},
+				{
+					"name": "entity.name.literal.grm",
+					"match": "STRING|NUMBER"
+				},
+				{
+					"name": "variable.other.grm",
+					"match": "\\w+"
+				}
+			]
+		},
+		"regex_string": {
+			"name": "string.quoted.regex.grm",
+			"begin": "`",
+			"end": "`",
+			"patterns": [
+				{
+					"include": "#regex_patterns"
+				}
+			]
+		},
+		"regex_patterns": {
+			"name": "constant.regex.grm",
+			"patterns": [
+				{
+					"name": "constant.character.escape.grm",
+					"match": "\\\\\\w"
+				},
+				{
+					"name": "string.one-of.grm",
+					"begin": "\\[",
+					"end": "\\]",
+					"patterns": [
+						{
+							"include": "#regex_patterns"
+						}
+					]
+				},
+				{
+					"name": "constant.character.modifier.grm",
+					"match": "[\\-\\+\\*\\?\\^\\$]"
+				},
+				{
+					"name": "constant.lookahead.positive.grm",
+					"begin": "\\(\\?=",
+					"end": "\\)",
+					"patterns": [
+						{
+							"include": "#regex_patterns"
+						}
+					]
+				},
+				{
+					"name": "constant.lookahead.negative.grm",
+					"begin": "\\(\\?!",
+					"end": "\\)",
+					"patterns": [
+						{
+							"include": "#regex_patterns"
+						}
+					]
+				},
+				{
+					"name": "constant.lookbehind.positive.grm",
+					"begin": "\\(\\?<=",
+					"end": "\\)",
+					"patterns": [
+						{
+							"include": "#regex_patterns"
+						}
+					]
+				},
+				{
+					"name": "constant.lookbehind.negative.grm",
+					"begin": "\\(\\?<!",
+					"end": "\\)",
+					"patterns": [
+						{
+							"include": "#regex_patterns"
+						}
+					]
+				},
+				{
+					"name": "string.group.grm",
+					"begin": "\\(",
+					"end": "\\)",
+					"patterns": [
+						{
+							"include": "#regex_patterns"
+						}
+					]
+				}
+			]
+		},
+		"strings": {
+			"patterns": [
+				{
+					"include": "#regex_string"
+				},
+				{
+					"name": "string.token.grm",
+					"begin": "\"",
+					"end": "\"",
+					"patterns": [
+						{
+							"name": "constant.character.escape.grm",
+							"match": "\\\\."
+						}
+					]
+				}
+			]
+		}
+	},
+	"scopeName": "source.grm"
+}
