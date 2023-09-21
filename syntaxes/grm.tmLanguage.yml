@@ -94,10 +94,10 @@ repository:
     # << lookarounds
 
     - name : "expression.group.grm"
-      begin: \((\?:)
+      begin: (\()(\?:)
       end  : \)
       beginCaptures:
-        "1": { name: "constant.group.non-capture.grm" }
+        "2": { name: "constant.group.non-capture.grm" }
       patterns:
         - include: "#regex_patterns"
 

@@ -154,10 +154,10 @@
         },
         {
           "name": "expression.group.grm",
-          "begin": "\\((\\?:)",
+          "begin": "(\\()(\\?:)",
           "end": "\\)",
           "beginCaptures": {
-            "1": {
+            "2": {
               "name": "constant.group.non-capture.grm"
             }
           },
@@ -194,10 +194,6 @@
         {
           "name": "constant.character.escape.grm",
           "match": "\\\\\\w"
-        },
-        {
-          "name": "constant.character.escape.grm",
-          "match": "\\."
         }
       ]
     },
