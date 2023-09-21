@@ -1,0 +1,18 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Yml to Json",
+      "command": "npm",
+      "type": "shell",
+      "args": [
+        "run",
+        "yml"
+      ],
+      "presentation": {
+        "reveal": "never"
+      },
+      "group": "build"
+    }
+  ]
+}
