@@ -7,7 +7,6 @@ expression ::= literal
             | property
             | IDENTIFIER;
 
-regexp ::= `\w`;
 property ::= expression "." IDENTIFIER;
 literal  ::= NUMBER | STRING | IDENTIFIER | "true" | "false" | "nil"
 grouping ::= "(" expression ")" ;
