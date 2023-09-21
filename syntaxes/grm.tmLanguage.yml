@@ -1,0 +1,133 @@
+name: Grm
+scopeName: source.grm
+patterns:
+  - patterns:
+    - name : comment.line.double-slash.grm
+      match: "//.*$"
+
+    - name : comment.block.grm
+      begin: "/\\*"
+      end  : "\\*/"
+
+  - include: "#statement"
+
+repository:
+  statement:
+    patterns:
+    - include: "#strings"
+    - include: "#keywords"
+
+
+  keywords:
+    patterns:
+    - name : "keyword.operator.or.grm"
+      match: \|
+    - name : "keyword.operator.optional.grm"
+      match: \?
+    - name : "keyword.operator.zero-or-many.grm"
+      match: \*
+    - name : "keyword.operator.ones-or-many.grm"
+      match: \+
+
+    - name : "constant.language.grm"
+      match: "STRING|NUMBER"
+
+    - name : "variable.control.grm"
+      match: \w+(?=\s*::=)
+
+    - name : "variable.other.grm"
+      match: \w+
+
+    - name : "keyword.operator.assignment.grm"
+      match: ::=
+
+    - name : "punctuation.terminator.statement.grm"
+      match: ;
+
+
+  regex_string:
+    name : "string.quoted.regexp.grm"
+    begin: "`"
+    end  : "`"
+    beginCaptures: {
+      "0": { name: "punctuation.back-tick.open.grm" } }
+    endCaptures: {
+      "0": { name: "punctuation.back-tick.close.grm" } }
+    patterns:
+    - include: "#regex_patterns"
+
+
+  regex_patterns:
+    patterns:
+    # << lookarounds
+    - name : "expression.lookaround.grm"
+      begin: \((\?=)
+      end  : \)
+      beginCaptures:
+        "1": { name: "constant.lookahead.positive.grm" }
+      patterns:
+        - include: "#regex_patterns"
+
+    - name : "expression.lookaround.grm"
+      begin: \((\?!)
+      end  : \)
+      beginCaptures:
+        "1": { name: "constant.lookahead.negative.grm" }
+      patterns:
+        - include: "#regex_patterns"
+
+    - name : "expression.lookaround.grm"
+      begin: \((\?<=)
+      end  : \)
+      beginCaptures:
+        "1": { name: "constant.lookbehind.positive.grm" }
+      patterns:
+        - include: "#regex_patterns"
+
+    - name : "expression.lookaround.grm"
+      begin: \((\?<!)
+      end  : \)
+      beginCaptures:
+        "1": { name: "constant.lookbehind.negative.grm" }
+      patterns:
+        - include: "#regex_patterns"
+    # << lookarounds
+
+    - name : "expression.group.grm"
+      begin: \((\?:)
+      end  : \)
+      beginCaptures:
+        "1": { name: "constant.group.non-capture.grm" }
+      patterns:
+        - include: "#regex_patterns"
+
+    - name : expression.group.capture.grm
+      begin: \(
+      end  : \)
+      patterns:
+      - include: "#regex_patterns"
+
+    - name : expression.group.any-of.grm
+      begin: \[
+      end  : \]
+      patterns:
+      - include: "#regex_patterns"
+
+    # << escaped chars & quantifiers
+    - name : "constant.character.modifier.grm"
+      match: "[\\-\\+\\*\\?\\^\\$\\|]"
+
+    - name : constant.character.escape.grm
+      match: \\\w
+    # << escaped chars & quantifiers
+
+
+  strings:
+    patterns:
+    - include: "#regex_string"
+    - name : "string.quoted.double.token.grm"
+      begin: "\""
+      end  : "\""
+      patterns:
+        - name : "constant.character.escape.grm"
+          match: "\\\\."
